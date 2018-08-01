@@ -1,42 +1,34 @@
 package com.sanctaultras.encryptedchat.user;
 
-import lombok.Data;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginController {
 
-    private final AuthenticationManager authenticationManager;
-
-    public LoginController(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
+//    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping("/login")
+    public void successfulLogin() {
     }
 
-    @ExceptionHandler
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public void failLoginAttempt(Exception e) {
-
+    @RequestMapping("/failed-login")
+    public void failedLogin() {
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> loginAttempt(@RequestBody LoginForm login) {
-         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                 new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
-        Authentication auth = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(auth);
-        return ResponseEntity.ok(RequestContextHolder.currentRequestAttributes().getSessionId());
+//    @PreAuthorize("isAuthenticated()")
+    @RequestMapping("authenticated")
+    public String authenticated() {
+        return "OK";
     }
 
-}
-@Data
-class LoginForm {
-    private String email;
-    private String password;
+//    @PreAuthorize("isAnonymous()")
+    @RequestMapping("anonymous")
+    public String anonymous() {
+        return "OK";
+    }
+
 }

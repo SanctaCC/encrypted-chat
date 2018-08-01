@@ -17,8 +17,8 @@ public class EncryptedChatApplication {
 	}
 
 	@Bean
-	public ApplicationRunner applicationRunner(UserRepository userRepository){
+	public ApplicationRunner applicationRunner(UserRepository userRepository) {
 		return args -> userRepository.save(new User(1L,"admin",
 				"$2a$12$xXkEzvvadsvzuSlrsNDj8e9QvgnIYUeEmQPl/NqVeqc2O0x90h7hO",new Date()));
-	}
+	}   //admin admin
 }
