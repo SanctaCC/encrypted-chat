@@ -91,8 +91,9 @@ class RegisterPage extends React.Component {
 
         this.state = {
             user: {
-                username: '',
-                password: ''
+                email: '',
+                password: '',
+                agreedToTerms: true
             },
             submitted: false
         };
@@ -118,7 +119,7 @@ class RegisterPage extends React.Component {
         this.setState({ submitted: true });
         const { user } = this.state;
         const { dispatch } = this.props;
-        if (user.username && user.password) {
+        if (user.email && user.password) {
             dispatch(userActions.register(user));
         }
     }
@@ -155,10 +156,10 @@ class RegisterPage extends React.Component {
                                     'display': 'block',
                                     'marginBottom': '1%'
                                 }}
-                                htmlFor="username">
+                                htmlFor="email">
                                 <LabelText>Email</LabelText>
                             </label>
-                            <InputWrapper className={'form-group' + (submitted && !user.username ? ' has-error' : '')}>
+                            <InputWrapper className={'form-group' + (submitted && !user.email ? ' has-error' : '')}>
                                 <input
                                     style={{
                                         flex: 'auto',
@@ -173,14 +174,14 @@ class RegisterPage extends React.Component {
                                         padding: '0px 8px',
                                     }}
                                     type="text"
-                                    name="username"
-                                    value={user.username}
+                                    name="email"
+                                    value={user.email}
                                     onChange={this.handleChange}
                                     placeholder="you@email.com"
                                 />
                             </InputWrapper>
-                            {submitted && !user.username &&
-                                <div style={helpBlock}>Username is required</div>
+                            {submitted && !user.email &&
+                                <div style={helpBlock}>email is required</div>
                             }
                         </div>
                         <div style={{

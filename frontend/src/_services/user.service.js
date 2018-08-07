@@ -18,7 +18,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return axios(`http://localhost:8080/login`, requestOptions)
+    return fetch(`http://localhost:8080/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // // login successful if there's a jwt token in the response
@@ -55,13 +55,14 @@ function getById(id) {
 }
 
 function register(user) {
+    console.log(user)
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
 
-    return fetch(`/users/register`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:8080/register`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
