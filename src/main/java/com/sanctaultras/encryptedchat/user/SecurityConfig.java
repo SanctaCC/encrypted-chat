@@ -39,12 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
-                .formLogin().successForwardUrl("/login").failureForwardUrl("/failed-login");
+                .formLogin().successForwardUrl("/login").failureForwardUrl("/failed-login").and().headers().frameOptions()
+                .disable();
 
     }
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().mvcMatchers("/**");
+        web.ignoring().mvcMatchers("/h2-console/**");
     }
 
 }
