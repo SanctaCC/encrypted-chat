@@ -1,4 +1,4 @@
-package com.sanctaultras.encryptedchat.user;
+package com.sanctaultras.encryptedchat.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,12 +39,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
-                .formLogin().successForwardUrl("/login").failureForwardUrl("/failed-login");
+                    .formLogin().loginProcessingUrl("/login").successForwardUrl("/login")
+                    .failureForwardUrl("/access-denied")
+                .and().headers().frameOptions().disable()
+                .and().exceptionHandling().authenticationEntryPoint(
+                        (request, response, authException) -> response.sendError(401));
 
     }
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().mvcMatchers("/**");
+        web.ignoring().mvcMatchers("/h2-console/**");
     }
 
 }
