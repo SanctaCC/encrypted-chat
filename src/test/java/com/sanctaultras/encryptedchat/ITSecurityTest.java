@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
@@ -24,12 +25,14 @@ public class ITSecurityTest {
     @Autowired
     WebApplicationContext applicationContext;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
 
     @Before
     public void before() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
+                .build();
         SecurityContextHolder.clearContext();
     }
 
@@ -37,7 +40,6 @@ public class ITSecurityTest {
     public void login() throws Exception {
         mockMvc.perform(post("/login").with(getRequestPostProcessorInvalidLogin()))
                 .andDo(print()).andExpect(SecurityMockMvcResultMatchers.unauthenticated());
-
     }
 
     private RequestPostProcessor getRequestPostProcessorInvalidLogin() {
