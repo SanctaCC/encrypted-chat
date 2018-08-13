@@ -1,6 +1,8 @@
 package com.sanctaultras.encryptedchat.commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,7 +10,7 @@ import java.util.Date;
 @Getter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @MappedSuperclass
-public abstract class BaseEntity<T> {
+public abstract class BaseEntity<T> implements Persistable<T>{
 
     @Id @GeneratedValue
     private T id;
@@ -27,4 +29,9 @@ public abstract class BaseEntity<T> {
         lastModified = new Date();
     }
 
+    @Override
+    @JsonIgnore
+    public boolean isNew() {
+        return id==null;
+    }
 }
