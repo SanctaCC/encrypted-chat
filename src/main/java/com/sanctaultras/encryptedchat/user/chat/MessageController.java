@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -22,7 +25,12 @@ public class MessageController {
     @PostMapping("/chatrooms/{chatRoomId}/messages")
     public ResponseEntity<?> postMessage(@PathVariable UUID chatRoomId, @RequestBody Message message,
                                          @AuthenticationPrincipal CustomSessionUser user) {
-        return ResponseEntity.status(201).body(messageService.addNewMessage(message.getBody(),chatRoomId,user.getId()));
+        Message messag = messageService.addNewMessage(message.getBody(),chatRoomId,user.getId());
+        Map map = new HashMap<>();
+        map.put("id",messag.getId());
+        map.put("body",messag.getBody());
+        map.put("author",user.getId());
+        return ResponseEntity.status(201).body(map);
     }
 
 }

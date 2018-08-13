@@ -1,6 +1,6 @@
 package com.sanctaultras.encryptedchat.user.chat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import com.sanctaultras.encryptedchat.commons.BaseEntity;
 import com.sanctaultras.encryptedchat.user.User;
 import lombok.AllArgsConstructor;
@@ -23,9 +23,8 @@ public class Message extends BaseEntity<Long> {
     private ChatRoom parentChatRoom;
 
     @ManyToOne
-    @JsonIgnore
-//    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-//    @JsonIdentityReference(alwaysAsId=true)
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private User author;
 
 }
