@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class ChatRoomsController {
@@ -19,8 +20,8 @@ public class ChatRoomsController {
     private final ChatRoomRepository chatRoomRepository;
 
     public ChatRoomsController(MessageService messageService, ChatRoomRepository chatRoomRepository) {
-        this.messageService = messageService;
         this.chatRoomRepository = chatRoomRepository;
+        this.messageService = messageService;
     }
 
     @GetMapping("/chatrooms")
@@ -31,7 +32,7 @@ public class ChatRoomsController {
     }
 
     @GetMapping("/chatrooms/{id}/messages")
-    public ResponseEntity<?> getChatRoomMessages(@PathVariable Long id,Pageable pageable) {
+    public ResponseEntity<?> getChatRoomMessages(@PathVariable UUID id, Pageable pageable) {
         return ResponseEntity.ok(messageService.getChatRoomMessages(id,pageable));
     }
 }
