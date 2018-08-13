@@ -1,11 +1,14 @@
 package com.sanctaultras.encryptedchat.user.register;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 public class RegisterController {
@@ -16,9 +19,14 @@ public class RegisterController {
         this.registerService = registerService;
     }
 
+    @ExceptionHandler(value = DataIntegrityViolationException.class)
+    public void emailAlreadyTaken(Exception e, HttpServletResponse res) throws IOException {
+        res.sendError(HttpStatus.CONFLICT.value(),"Email already taken");
+    }
+
     @PostMapping("register")
-    public ResponseEntity<?>  register(@RequestBody @Valid RegisterForm registerForm) {
-        registerService.register(registerForm);
-        return ResponseEntity.status(201).build();
+    public ResponseEntity<User> register(@RequestBody @Valid RegisterForm registerForm) {
+        User user = registerService.register(registerForm);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 }

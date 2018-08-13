@@ -1,6 +1,7 @@
 package com.sanctaultras.encryptedchat.user.register;
 
 import com.sanctaultras.encryptedchat.user.User;
+import com.sanctaultras.encryptedchat.user.UserDetailsServiceImpl;
 import com.sanctaultras.encryptedchat.user.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,15 +13,19 @@ public class RegisterService {
 
     private final UserRepository userRepository;
 
-    public RegisterService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    private final UserDetailsServiceImpl userDetailsService;
+
+    public RegisterService(PasswordEncoder passwordEncoder, UserRepository userRepository, UserDetailsServiceImpl userDetailsService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.userDetailsService = userDetailsService;
     }
 
-    public void register(RegisterForm registerForm) {
+    public org.springframework.security.core.userdetails.User register(RegisterForm registerForm) {
         User newUser = new User();
         newUser.setEmail(registerForm.getEmail());
         newUser.setPassword(passwordEncoder.encode(registerForm.getPassword()));
-        userRepository.save(newUser);
+        newUser = userRepository.save(newUser);
+        return userDetailsService.createUserDetails(newUser);
     }
 }

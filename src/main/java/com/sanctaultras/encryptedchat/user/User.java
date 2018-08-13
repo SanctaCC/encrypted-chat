@@ -3,20 +3,28 @@ package com.sanctaultras.encryptedchat.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sanctaultras.encryptedchat.commons.BaseEntity;
-import lombok.*;
+import com.sanctaultras.encryptedchat.user.chat.ChatRoom;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
+    @Column(unique = true)
     private String email;
 
     private String password;
@@ -28,6 +36,9 @@ public class User extends BaseEntity{
     private String encryptedPrivateKey;
 
     private String publicKey;
+
+    @ManyToMany
+    private Set<ChatRoom> userRooms;
 
     @Override
     public boolean equals(Object o) {
