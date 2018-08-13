@@ -12,13 +12,7 @@ export const userService = {
 };
 
 function login(username, password) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: JSON.stringify({ username, password })
-    };
-
-    return fetch(`http://localhost:8080/login`, requestOptions)
+    return axios.post(`http://localhost:8080/login`, `username=${username}&password=${password}`)
         .then(handleResponse)
         .then(user => {
             // // login successful if there's a jwt token in the response
@@ -55,14 +49,7 @@ function getById(id) {
 }
 
 function register(user) {
-    console.log(user)
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-    };
-
-    return fetch(`http://localhost:8080/register`, requestOptions).then(handleResponse);
+    return axios.post(`http://localhost:8080/register`,user).then(handleResponse);
 }
 
 function update(user) {
