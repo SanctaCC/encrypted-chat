@@ -22,7 +22,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User extends BaseEntity {
+public class User extends BaseEntity<Long> {
 
     @Column(unique = true)
     private String email;

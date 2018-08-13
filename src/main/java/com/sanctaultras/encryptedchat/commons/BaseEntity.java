@@ -4,11 +4,11 @@ import lombok.Getter;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class BaseEntity {
+@MappedSuperclass
+public abstract class BaseEntity<T> {
 
     @Id @GeneratedValue
-    private Long id;
+    private T id;
 }
