@@ -1,7 +1,9 @@
 package com.sanctaultras.encryptedchat.user;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +19,14 @@ public class LoginController {
     //    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping("/login")
-    public String successfulLogin(HttpServletResponse res) throws IOException {
+    public ResponseEntity<org.springframework.security.core.userdetails.User>
+        successfulLogin(HttpServletResponse res, @AuthenticationPrincipal CustomSessionUser user) throws IOException {
+
         if (SecurityContextHolder.getContext().getAuthentication().getAuthorities()
                 .contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))) {
             res.sendError(401);
         }
-        return "logged in";
+        return ResponseEntity.ok(user);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)

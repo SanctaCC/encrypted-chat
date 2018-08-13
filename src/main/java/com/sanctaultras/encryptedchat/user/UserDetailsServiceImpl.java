@@ -22,8 +22,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    private org.springframework.security.core.userdetails.User createUserDetails(User user) {
-        return new CustomSessionUser(user.getEmail(),user.getPassword(), Collections.EMPTY_LIST
+    public org.springframework.security.core.userdetails.User createUserDetails(User user) {
+        return new CustomSessionUser(user.getEmail(),user.getPassword(), Collections.emptyList()
         , user.getId());
     }
 
