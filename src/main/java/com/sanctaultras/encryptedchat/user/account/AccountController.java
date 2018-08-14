@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
+
 @RestController
 @PreAuthorize("isAuthenticated()")
 public class AccountController {
@@ -19,8 +22,9 @@ public class AccountController {
     }
 
     @PostMapping("/account/password")
-    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordForm changePasswordForm, @AuthenticationPrincipal
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordForm changePasswordForm, @AuthenticationPrincipal
                                             CustomSessionUser user) {
+
         accountService.changePassword(user.getId(),changePasswordForm.getOldPassword(),changePasswordForm.getNewPassword());
         return ResponseEntity.ok().build();
     }
@@ -28,5 +32,6 @@ public class AccountController {
 @Data
 class ChangePasswordForm {
     private String oldPassword;
+    @Size(min=6,max = 72)
     private String newPassword;
 }
