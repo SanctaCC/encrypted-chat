@@ -1,4 +1,4 @@
-package com.sanctaultras.encryptedchat.user;
+package com.sanctaultras.encryptedchat.user.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

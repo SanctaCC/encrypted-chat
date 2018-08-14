@@ -1,6 +1,6 @@
 package com.sanctaultras.encryptedchat.user.chat;
 
-import com.sanctaultras.encryptedchat.user.CustomSessionUser;
+import com.sanctaultras.encryptedchat.user.account.CustomSessionUser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package com.sanctaultras.encryptedchat.web.security;
 
-import com.sanctaultras.encryptedchat.user.CustomSessionUser;
+import com.sanctaultras.encryptedchat.user.account.CustomSessionUser;
 import com.sanctaultras.encryptedchat.user.chat.ChatRoomRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
