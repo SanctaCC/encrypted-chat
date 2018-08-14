@@ -24,7 +24,7 @@ public class ChatRoom extends BaseEntity<UUID> {
 
     private String name;
 
-    @ManyToMany(mappedBy = "userRooms")
+    @ManyToMany
     @JsonSerialize(using=UserSetSerializer.class)
     private Set<User> users;
 

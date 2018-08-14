@@ -27,16 +27,14 @@ public class EncryptedChatApplication {
 	    User admin = User.builder().email("admin")
                 .password("$2a$12$xXkEzvvadsvzuSlrsNDj8e9QvgnIYUeEmQPl/NqVeqc2O0x90h7hO")
                 .build();
-        ChatRoom first = new ChatRoom();
-        first.setName("chat name");
-        first = chatRoomRepository.save(first);
-        log.warn("UUID:{}",first.getId());
-        admin.setUserRooms(new HashSet<>());
-        admin.getUserRooms().add(first);
 
         User user2 = User.builder().email("admin2").password("password123").build();
-        user2.setUserRooms(new HashSet<>());
-        user2.getUserRooms().add(first);
-        return args -> userRepository.saveAll(Arrays.asList(admin, user2));
+        userRepository.saveAll(Arrays.asList(admin, user2));
+        ChatRoom first = new ChatRoom();
+        first.setName("chat name");
+        first.setUsers(new HashSet<>());
+        first.getUsers().add(admin);
+        first.getUsers().add(user2);
+        return args -> chatRoomRepository.save(first);
 	}   //admin admin
 }

@@ -37,7 +37,7 @@ public class User extends BaseEntity<Long> {
 
     private String publicKey;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "users")
     private Set<ChatRoom> userRooms;
 
     @Override
