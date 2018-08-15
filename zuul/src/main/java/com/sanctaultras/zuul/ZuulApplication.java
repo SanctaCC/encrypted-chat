@@ -9,20 +9,24 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.netflix.zuul.EnableZuulServer;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @Slf4j
 @EnableZuulProxy
 @EnableEurekaServer
+@EnableFeignClients
 public class ZuulApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ZuulApplication.class, args);
 	}
+
 	@Bean
-	public ApplicationRunner bean(DiscoveryClient client) {
-		return args -> System.out.println(client.getServices());
+	public RestTemplate restTemplate(){
+		return new RestTemplate();
 	}
 
 //	@Bean
