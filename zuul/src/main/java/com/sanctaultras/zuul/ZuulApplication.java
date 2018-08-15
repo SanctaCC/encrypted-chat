@@ -1,17 +1,28 @@
 package com.sanctaultras.zuul;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+import org.springframework.cloud.netflix.zuul.EnableZuulServer;
+import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @Slf4j
 @EnableZuulProxy
+@EnableEurekaServer
 public class ZuulApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ZuulApplication.class, args);
+	}
+	@Bean
+	public ApplicationRunner bean(DiscoveryClient client) {
+		return args -> System.out.println(client.getServices());
 	}
 
 //	@Bean
