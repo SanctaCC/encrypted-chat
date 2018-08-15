@@ -5,16 +5,48 @@ import { connect } from 'react-redux';
 import { userActions } from '../_actions';
  
 class HomePage extends React.Component {
+    state = {
+        message: []
+    }
+    exampleSocket = new WebSocket('wss://echo.websocket.org')
+
     componentDidMount() {
         this.props.dispatch(userActions.getAll());
-    }
+        this.exampleSocket.onopen = (event) => {
+            console.log(this.exampleSocket)
+            this.exampleSocket.send("topic/hello");
+            console.log(event); 
+        };
+
+        this.exampleSocket.onmessage = evt => { 
+            // add the new message to state
+              this.setState({
+              messages : this.state.messages.concat([ evt.data ])
+            })
+          };
+
+        setInterval(() => {
+            console.log('test')
+            this.exampleSocket.send('test')
+        }, 2000)
+        this.exampleSocket.onmessage = (event) => {
+            console.log(event);
+            console.log('reoginre')
+        }
+
+        this.exampleSocket.addEventListener('message',(e) => {
+            this.exampleSocket.onmessage(e);
+          })
+        }
  
     handleDeleteUser(id) {
         return (e) => this.props.dispatch(userActions.delete(id));
     }
+
  
     render() {
         const { user, users } = this.props;
+
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h1>Hi {user.username}!</h1>
