@@ -1,4 +1,4 @@
-package com.sanctaultras.encryptedchat.web;
+package com.sanctaultras.auth;
 
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.http.ResponseEntity;

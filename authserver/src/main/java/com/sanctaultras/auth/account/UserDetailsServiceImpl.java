@@ -1,7 +1,7 @@
-package com.sanctaultras.encryptedchat.user.account;
+package com.sanctaultras.auth.account;
 
-import com.sanctaultras.encryptedchat.user.User;
-import com.sanctaultras.encryptedchat.user.UserRepository;
+import com.sanctaultras.auth.user.User;
+import com.sanctaultras.auth.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,8 +25,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public org.springframework.security.core.userdetails.User createUserDetails(User user) {
-        return new CustomSessionUser(user.getEmail(),user.getPassword(), Collections.emptyList()
-        , user.getId());
+        return new
+                org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),Collections.emptyList());
+//        return new CustomSessionUser(user.getEmail(),user.getPassword(), Collections.emptyList()
+//        , user.getId());
     }
 
 }

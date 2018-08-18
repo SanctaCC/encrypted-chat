@@ -1,9 +1,10 @@
-package com.sanctaultras.encryptedchat.user.account;
+package com.sanctaultras.auth.user;
 
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,12 +24,13 @@ public class AccountController {
 
     @PostMapping("/account/password")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordForm changePasswordForm, @AuthenticationPrincipal
-                                            CustomSessionUser user) {
+            User user) {
 
-        accountService.changePassword(user.getId(),changePasswordForm.getOldPassword(),changePasswordForm.getNewPassword());
+        accountService.changePassword(user.getUsername(),changePasswordForm.getOldPassword(),changePasswordForm.getNewPassword());
         return ResponseEntity.ok().build();
     }
 }
+
 @Data
 class ChangePasswordForm {
     private String oldPassword;

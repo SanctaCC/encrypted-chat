@@ -1,8 +1,8 @@
 package com.sanctaultras.encryptedchat.web.security;
 
-import com.sanctaultras.encryptedchat.user.account.CustomSessionUser;
 import com.sanctaultras.encryptedchat.user.chat.ChatRoomRepository;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -17,10 +17,10 @@ public class ChatRoomAccessMethodSecurityExpression {
     }
 
     public boolean chatRoomAccess(Authentication obj, UUID chatRoomId) {
-        if(!(obj.getPrincipal() instanceof CustomSessionUser))
+        if(!(obj.getPrincipal() instanceof User))
             return false;
-        CustomSessionUser user = (CustomSessionUser) obj.getPrincipal();
-        Integer hasPerm = chatRoomRepository.isParticipating(chatRoomId,user.getId());
+        User user = (User) obj.getPrincipal();
+        Integer hasPerm = chatRoomRepository.isParticipating(chatRoomId,user.getUsername());
         return hasPerm != null;
     }
 }

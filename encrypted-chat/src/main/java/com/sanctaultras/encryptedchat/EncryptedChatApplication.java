@@ -10,13 +10,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
 @SpringBootApplication
 @Slf4j
 @EnableEurekaClient
+@EnableRedisHttpSession
 public class EncryptedChatApplication {
 
 	public static void main(String[] args) {
@@ -25,18 +26,13 @@ public class EncryptedChatApplication {
 
 	@Bean
 	public ApplicationRunner applicationRunner(UserRepository userRepository,
-                                               ChatRoomRepository chatRoomRepository) {
-	    User admin = User.builder().email("admin")
-                .password("$2a$12$xXkEzvvadsvzuSlrsNDj8e9QvgnIYUeEmQPl/NqVeqc2O0x90h7hO")
-                .build();
-
-        User user2 = User.builder().email("admin2").password("password123").build();
-        userRepository.saveAll(Arrays.asList(admin, user2));
+											   ChatRoomRepository chatRoomRepository) {
+		User u = new User("admin");
+		userRepository.save(u);
         ChatRoom first = new ChatRoom();
         first.setName("chat name");
         first.setUsers(new HashSet<>());
-        first.getUsers().add(admin);
-        first.getUsers().add(user2);
+        first.getUsers().add(u);
         return args -> chatRoomRepository.save(first);
-	}   //admin admin
+	}
 }

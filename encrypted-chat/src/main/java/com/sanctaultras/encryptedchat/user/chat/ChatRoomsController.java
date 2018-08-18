@@ -1,10 +1,10 @@
 package com.sanctaultras.encryptedchat.user.chat;
 
-import com.sanctaultras.encryptedchat.user.account.CustomSessionUser;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,8 +26,8 @@ public class ChatRoomsController {
 
     @GetMapping("/chatrooms")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> getAvailableChatRooms(@AuthenticationPrincipal CustomSessionUser user) {
-        List<ChatRoom> list = chatRoomRepository.findAllByUser_Id(user.getId());
+    public ResponseEntity<?> getAvailableChatRooms(@AuthenticationPrincipal User user) {
+        List<ChatRoom> list = chatRoomRepository.findAllByUser_Id(user.getUsername());
         return ResponseEntity.ok(list);
     }
 

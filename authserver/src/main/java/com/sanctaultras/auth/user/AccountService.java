@@ -1,7 +1,5 @@
-package com.sanctaultras.encryptedchat.user.account;
+package com.sanctaultras.auth.user;
 
-import com.sanctaultras.encryptedchat.user.User;
-import com.sanctaultras.encryptedchat.user.UserRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,7 +15,7 @@ public class AccountService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void changePassword(Long userId,String oldPass,String newPass) {
+    public void changePassword(String userId,String oldPass,String newPass) {
         User u = userRepository.getOne(userId);
         if (passwordEncoder.matches(oldPass,u.getPassword())) {
             u.setPassword(passwordEncoder.encode(newPass));

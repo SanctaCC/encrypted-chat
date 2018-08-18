@@ -1,4 +1,4 @@
-package com.sanctaultras.encryptedchat.user.account.register;
+package com.sanctaultras.auth.register;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;

@@ -13,14 +13,15 @@ public class MessageService {
 
     private final MessageRepository messageRepository;
 
-    private final UserRepository userRepository;
-
     private final ChatRoomRepository chatRoomRepository;
 
-    public MessageService(MessageRepository messageRepository, UserRepository userRepository, ChatRoomRepository chatRoomRepository) {
+    private final UserRepository userRepository;
+
+    public MessageService(MessageRepository messageRepository,
+                          ChatRoomRepository chatRoomRepository, UserRepository userRepository) {
         this.messageRepository = messageRepository;
-        this.userRepository = userRepository;
         this.chatRoomRepository = chatRoomRepository;
+        this.userRepository = userRepository;
     }
 
     @PreAuthorize("@chatSec.chatRoomAccess(authentication,#id)")
@@ -29,7 +30,7 @@ public class MessageService {
     }
 
     @PreAuthorize("@chatSec.chatRoomAccess(authentication,#chatRoomId)")
-    public Message addNewMessage(String body, UUID chatRoomId, Long userId) {
+    public Message addNewMessage(String body, UUID chatRoomId, String userId) {
         Message message = new Message();
         message.setBody(body);
         message.setAuthor(userRepository.getOne(userId));

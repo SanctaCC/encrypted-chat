@@ -1,8 +1,8 @@
-package com.sanctaultras.encryptedchat.user.account.register;
+package com.sanctaultras.auth.register;
 
-import com.sanctaultras.encryptedchat.user.User;
-import com.sanctaultras.encryptedchat.user.account.UserDetailsServiceImpl;
-import com.sanctaultras.encryptedchat.user.UserRepository;
+import com.sanctaultras.auth.account.UserDetailsServiceImpl;
+import com.sanctaultras.auth.user.User;
+import com.sanctaultras.auth.user.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

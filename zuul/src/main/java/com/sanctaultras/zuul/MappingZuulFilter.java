@@ -42,6 +42,7 @@ public class MappingZuulFilter extends com.netflix.zuul.ZuulFilter{
             HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
             HttpServletResponse response = RequestContext.getCurrentContext().getResponse();
             if (!matchExists(handler.getMappings(), request.getRequestURI())) {
+                RequestContext.getCurrentContext().setSendZuulResponse(false);
                 response.sendError(404,"Mapping doesn't exists");
             }
         } catch (IOException e) {
