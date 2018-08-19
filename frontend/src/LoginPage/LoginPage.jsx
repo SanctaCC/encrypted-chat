@@ -76,175 +76,175 @@ const Button = styled.button`
 `
 
 const helpBlock = {
-    color: 'red',
-    fontSize: '12px',
+	color: 'red',
+	fontSize: '12px',
 }
 
 const hyperLink = {
-    color: '#3884FF',
-    textDecoration: 'underline',
+	color: '#3884FF',
+	textDecoration: 'underline',
 }
 
 class LoginPage extends React.Component {
-    constructor(props) {
-        super(props);
+	constructor(props) {
+		super(props);
 
-        // reset login status
-        this.props.dispatch(userActions.logout());
+		// reset login status
+		this.props.dispatch(userActions.logout());
 
-        this.state = {
-            username: '',
-            password: '',
-            submitted: false
-        };
+		this.state = {
+			username: '',
+			password: '',
+			submitted: false
+		};
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
 
-    handleChange(e) {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-    }
+	handleChange(e) {
+		const { name, value } = e.target;
+		this.setState({ [name]: value });
+	}
 
-    handleSubmit(e) {
-        e.preventDefault();
+	handleSubmit(e) {
+		e.preventDefault();
 
-        this.setState({ submitted: true });
-        const { username, password } = this.state;
-        const { dispatch } = this.props;
-        if (username && password) {
-            dispatch(userActions.login(username, password));
-        }
-    }
+		this.setState({ submitted: true });
+		const { username, password } = this.state;
+		const { dispatch } = this.props;
+		if (username && password) {
+			dispatch(userActions.login(username, password));
+		}
+	}
 
-    render() {
-        const { loggingIn } = this.props;
-        const { username, password, submitted } = this.state;
-        return (
-            <Container>
-                <Title>
-                    Encrypted Chat
+	render() {
+		const { loggingIn } = this.props;
+		const { username, password, submitted } = this.state;
+		return (
+			<Container>
+				<Title>
+					Encrypted Chat
                 </Title>
-                <FormWrapper>
-                    <h2
-                        style={{
-                            padding: '32px 24px',
-                            textAlign: 'center',
-                        }}>
-                        Sign in to Encrypted Chat
+				<FormWrapper>
+					<h2
+						style={{
+							padding: '32px 24px',
+							textAlign: 'center',
+						}}>
+						Sign in to Encrypted Chat
                     </h2>
-                    <form
-                        style={{
-                            padding: '32px 24px',
-                            borderTop: '1px solid #E6ECF1'
-                        }}
-                        name="form"
-                        onSubmit={this.handleSubmit}>
+					<form
+						style={{
+							padding: '32px 24px',
+							borderTop: '1px solid #E6ECF1'
+						}}
+						name="form"
+						onSubmit={this.handleSubmit}>
 
-                        <div style={{
-                            marginBottom: '24px'
-                        }}>
-                            <label
-                                style={{
-                                    'display': 'block',
-                                    'marginBottom': '1%'
-                                }}
-                                htmlFor="username">
-                                <LabelText>Email</LabelText>
-                            </label>
-                            <InputWrapper className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                                <input
-                                    style={{
-                                        flex: 'auto',
-                                        border: 'none',
-                                        outline: 'none',
-                                        margin: '0px',
-                                        width: '100%',
-                                        background: 'transparent',
-                                        resize: 'none',
-                                        borderRadius: '3px',
-                                        height: '38px',
-                                        padding: '0px 8px',
-                                    }}
-                                    type="text"
-                                    name="username"
-                                    value={username}
-                                    onChange={this.handleChange}
-                                    placeholder="you@email.com"
-                                />
-                            </InputWrapper>
-                            {submitted && !username &&
-                                <div style={helpBlock}>Email is required</div>
-                            }
-                        </div>
-                        <div style={{
-                            marginBottom: '24px'
-                        }}>
-                            <label
-                                style={{
-                                    'display': 'block',
-                                    'marginBottom': '1%'
-                                }}
-                                htmlFor="password">
-                                <LabelText>Password</LabelText>
-                            </label>
-                            <InputWrapper className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                                <input
-                                    style={{
-                                        flex: 'auto',
-                                        border: 'none',
-                                        outline: 'none',
-                                        margin: '0px',
-                                        width: '100%',
-                                        background: 'transparent',
-                                        resize: 'none',
-                                        borderRadius: '3px',
-                                        height: '38px',
-                                        padding: '0px 8px',
-                                    }}
-                                    type="password"
-                                    name="password"
-                                    value={password}
-                                    onChange={this.handleChange}
-                                    placeholder="Password"
-                                />
-                            </InputWrapper>
-                            {submitted && !password &&
-                                <div style={helpBlock}>Password is required</div>
-                            }
-                        </div>
-                        <div className="form-group">
-                            <Button primary>Login</Button>
-                            {loggingIn &&
-                                <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                            }
-                        </div>
-                    </form>
-                </FormWrapper>
-                <Link
-                    to="/register"
-                    style={{
-                        margin: 'auto',
-                        fontSize: '12px',
-                        lineHeight: 1.5,
-                        fontWeight: 500,
-                        textDecoration: 'none',
-                        color: '#9DAAB6',
-                    }}>
-                    New to Encrypted Chat? <span style={hyperLink}>Create an account</span>
-                </Link>
+						<div style={{
+							marginBottom: '24px'
+						}}>
+							<label
+								style={{
+									'display': 'block',
+									'marginBottom': '1%'
+								}}
+								htmlFor="username">
+								<LabelText>Email</LabelText>
+							</label>
+							<InputWrapper className={'form-group' + (submitted && !username ? ' has-error' : '')}>
+								<input
+									style={{
+										flex: 'auto',
+										border: 'none',
+										outline: 'none',
+										margin: '0px',
+										width: '100%',
+										background: 'transparent',
+										resize: 'none',
+										borderRadius: '3px',
+										height: '38px',
+										padding: '0px 8px',
+									}}
+									type="text"
+									name="username"
+									value={username}
+									onChange={this.handleChange}
+									placeholder="you@email.com"
+								/>
+							</InputWrapper>
+							{submitted && !username &&
+								<div style={helpBlock}>Email is required</div>
+							}
+						</div>
+						<div style={{
+							marginBottom: '24px'
+						}}>
+							<label
+								style={{
+									'display': 'block',
+									'marginBottom': '1%'
+								}}
+								htmlFor="password">
+								<LabelText>Password</LabelText>
+							</label>
+							<InputWrapper className={'form-group' + (submitted && !password ? ' has-error' : '')}>
+								<input
+									style={{
+										flex: 'auto',
+										border: 'none',
+										outline: 'none',
+										margin: '0px',
+										width: '100%',
+										background: 'transparent',
+										resize: 'none',
+										borderRadius: '3px',
+										height: '38px',
+										padding: '0px 8px',
+									}}
+									type="password"
+									name="password"
+									value={password}
+									onChange={this.handleChange}
+									placeholder="Password"
+								/>
+							</InputWrapper>
+							{submitted && !password &&
+								<div style={helpBlock}>Password is required</div>
+							}
+						</div>
+						<div className="form-group">
+							<Button primary>Login</Button>
+							{loggingIn &&
+								<img alt='loader' src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+							}
+						</div>
+					</form>
+				</FormWrapper>
+				<Link
+					to="/register"
+					style={{
+						margin: 'auto',
+						fontSize: '12px',
+						lineHeight: 1.5,
+						fontWeight: 500,
+						textDecoration: 'none',
+						color: '#9DAAB6',
+					}}>
+					New to Encrypted Chat? <span style={hyperLink}>Create an account</span>
+				</Link>
 
-            </Container>
-        );
-    }
+			</Container>
+		);
+	}
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
-    return {
-        loggingIn
-    };
+	const { loggingIn } = state.authentication;
+	return {
+		loggingIn
+	};
 }
 
 const connectedLoginPage = connect(mapStateToProps)(LoginPage);

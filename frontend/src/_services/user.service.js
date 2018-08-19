@@ -7,8 +7,8 @@ export const userService = {
     register,
     getAll,
     getById,
-    update,
-    delete: _delete
+    // update,
+    // delete: _delete
 };
 
 function login(username, password) {
@@ -52,24 +52,24 @@ function register(user) {
     return axios.post(`http://localhost:8080/register`,user).then(handleResponse);
 }
 
-function update(user) {
-    const requestOptions = {
-        method: 'PUT',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-    };
+// function update(user) {
+//     const requestOptions = {
+//         method: 'PUT',
+//         headers: { ...authHeader(), 'Content-Type': 'application/json' },
+//         body: JSON.stringify(user)
+//     };
 
-    return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);;
-}
+//     return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);;
+// }
 
-function _delete(id) {
-    const requestOptions = {
-        method: 'DELETE',
-        headers: authHeader()
-    };
+// function _delete(id) {
+//     const requestOptions = {
+//         method: 'DELETE',
+//         headers: authHeader()
+//     };
 
-    return fetch(`/users/${id}`, requestOptions).then(handleResponse);
-}
+//     return fetch(`/users/${id}`, requestOptions).then(handleResponse);
+// }
 
 function handleResponse(response) {
     console.log(response)

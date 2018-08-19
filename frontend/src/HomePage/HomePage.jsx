@@ -1,43 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
- 
 import { userActions } from '../_actions';
+var SockJS = require('sockjs-client');
+var Stomp = require('stomp-websocket');
+ 
  
 class HomePage extends React.Component {
     state = {
         message: []
     }
-    exampleSocket = new WebSocket('wss://echo.websocket.org')
 
     componentDidMount() {
-        this.props.dispatch(userActions.getAll());
-        this.exampleSocket.onopen = (event) => {
-            console.log(this.exampleSocket)
-            this.exampleSocket.send("topic/hello");
-            console.log(event); 
-        };
-
-        this.exampleSocket.onmessage = evt => { 
-            // add the new message to state
-              this.setState({
-              messages : this.state.messages.concat([ evt.data ])
-            })
-          };
+        let stompClient = null;
+        const wsSourceUrl = "http://localhost:8080/ws";
+        var socket = new SockJS(wsSourceUrl);
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('http://localhost:8080/topic/greetings', function (greeting) {
+                console.log('test')
+                console.log(greeting)
+            });
+            stompClient.send("http://localhost:8080/topic/hello", {}, JSON.stringify({'name': 'test'}));
+        });
 
         setInterval(() => {
-            console.log('test')
-            this.exampleSocket.send('test')
+            stompClient.send("http://localhost:8080/app/hello", {}, JSON.stringify({'name': 'test'}));
         }, 2000)
-        this.exampleSocket.onmessage = (event) => {
-            console.log(event);
-            console.log('reoginre')
-        }
-
-        this.exampleSocket.addEventListener('message',(e) => {
-            this.exampleSocket.onmessage(e);
-          })
-        }
+    }
  
     handleDeleteUser(id) {
         return (e) => this.props.dispatch(userActions.delete(id));
@@ -45,7 +36,7 @@ class HomePage extends React.Component {
 
  
     render() {
-        const { user, users } = this.props;
+        const { user } = this.props;
 
         return (
             <div className="col-md-6 col-md-offset-3">
