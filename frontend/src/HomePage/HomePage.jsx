@@ -18,15 +18,15 @@ class HomePage extends React.Component {
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('http://localhost:8080/topic/greetings', function (greeting) {
+            stompClient.subscribe('/topic/hello', function (greeting) {
                 console.log('test')
                 console.log(greeting)
             });
-            stompClient.send("http://localhost:8080/topic/hello", {}, JSON.stringify({'name': 'test'}));
+            stompClient.send("/app/test", {}, JSON.stringify({'name': 'test'}));
         });
 
         setInterval(() => {
-            stompClient.send("http://localhost:8080/app/hello", {}, JSON.stringify({'name': 'test'}));
+            stompClient.send("/app/test", {}, JSON.stringify({'name': 'test'}));
         }, 2000)
     }
  
