@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  zuul:
+    container_name: zuul
+    build:
+      context: ./zuul
+      dockerfile: Dockerfile
+    image: encrypted-chat_zuul
+    ports:
+    - 8761:8761
+
+  authserver:
+    build: ./authserver
+    ports:
+    - 8081:8081
+
+  encrypted-chat:
+    build: ./encrypted-chat
+    ports:
+    - 8080:8080
+
+  redis:
+    image: redis
+    ports:
+    - 6379:6379
