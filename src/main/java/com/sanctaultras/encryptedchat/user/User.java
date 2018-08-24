@@ -29,10 +29,6 @@ public class User extends BaseEntity<Long> {
 
     private String password;
 
-    @LastModifiedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private Date date;
-
     private String encryptedPrivateKey;
 
     private String publicKey;
