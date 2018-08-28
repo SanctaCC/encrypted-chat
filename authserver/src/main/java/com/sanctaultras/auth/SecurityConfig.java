@@ -37,9 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
                 .formLogin().loginProcessingUrl("/login").successForwardUrl("/login")
                 .failureForwardUrl("/access-denied")
+                .and().logout().logoutSuccessHandler((request, response, authentication) -> response.setStatus(200))
                 .and().headers().frameOptions().disable()
                 .and().exceptionHandling().authenticationEntryPoint(
-                (request, response, authException) -> response.sendError(401));
+                (request, response, authException) -> response.sendError(401))
+                .and().cors();
 
     }
     @Override
