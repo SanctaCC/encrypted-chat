@@ -37,12 +37,16 @@ function login(username, password) {
 
 
 function logout() {
-    axios.get(`http://localhost:8080/logout`)
     localStorage.removeItem('user');
+    return axios.get(`http://localhost:8080/logout`)
 }
 
 function getAll() {
-    return axios.get(`http://localhost:8080/accounts`).then(handleResponse);
+    return axios.get(`http://localhost:8080/accounts`)
+    .then(handleResponse)
+    .then(response => {
+        console.log(response);
+    })
 }
 
 function getById(id) {

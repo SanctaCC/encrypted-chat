@@ -1,79 +1,80 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { userActions } from '../_actions';
-var SockJS = require('sockjs-client');
-var Stomp = require('stomp-websocket');
- 
- 
+import React from 'react'
+import { connect } from 'react-redux'
+import { userActions } from '../_actions'
+import { Navbar } from './components/Navbar/Navbar'
+import { UserList } from './components/UserList/UserList'
+import SockJS from 'sockjs-client'
+import Stomp  from 'stomp-websocket'
+
+
 class HomePage extends React.Component {
-    state = {
-        message: []
-    }
+  state = {
+    message: []
+  }
 
-    componentDidMount() {
-        // let stompClient = null;
-        // const wsSourceUrl = "http://localhost:8080/ws";
-        // var socket = new SockJS(wsSourceUrl);
-        // stompClient = Stomp.over(socket);
-        // stompClient.connect({}, function (frame) {
-        //     console.log('Connected: ' + frame);
-        //     stompClient.subscribe('/topic/hello', function (greeting) {
-        //         console.log('test')
-        //         console.log(greeting)
-        //     });
-        //     stompClient.send("/app/test", {}, JSON.stringify({'name': 'test'}));
-        // });
+  componentDidMount() {
+    this.props.dispatch(userActions.getAll());
+    this.testSockets();
+  }
 
-        // setInterval(() => {
-        //     stompClient.send("/app/test", {}, JSON.stringify({'name': 'test'}));
-        // }, 2000)
-    }
- 
-    handleDeleteUser(id) {
-        return (e) => this.props.dispatch(userActions.delete(id));
-    }
+  testSockets() {
+    let stompClient = null;
+    const wsSourceUrl = "http://localhost:8080/ws";
+    var socket = new SockJS(wsSourceUrl);
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+      console.log('Connected: ' + frame);
+      stompClient.subscribe('/topic/hello', function (greeting) {
+        console.log('test')
+        console.log(greeting)
+      });
+      stompClient.send("/app/test", {}, JSON.stringify({ 'name': 'test' }));
+    });
+  }
 
- 
-    render() {
-        const { user, users } = this.props;
+  // handleDeleteUser(id) {
+  //   return (e) => this.props.dispatch(userActions.delete(id));
+  // }
 
-        return (
-            <div className="col-md-6 col-md-offset-3">
-                <h1>Hi {user.username}!</h1>
-                <p>You're logged in with React!!</p>
-                <h3>All registered users:</h3>
-                {users.loading && <em>Loading users...</em>}
-                {users.items &&
-                    <ul>
-                        {users.items.map((user, index) =>
-                            <li key={user.id}>
-                                {user.username}
-                                {
-                                    user.deleting ? <em> - Deleting...</em>
-                                    : user.deleteError ? <span className="error"> - ERROR: {user.deleteError}</span>
-                                    : <span> - <a onClick={this.handleDeleteUser(user.id)}>Delete</a></span>
-                                }
-                            </li>
-                        )}
-                    </ul>
-                } 
-                <p>
-                    <Link to="/login">Logout</Link>
-                </p>
-            </div>
-        );
-    }
+
+  render() {
+    //const { user, users } = this.props;
+
+    return (
+      <div style={{
+        width: '100vw',
+        height: '100vh',
+      }}>
+        <Navbar></Navbar>
+        <UserList></UserList>
+        {/* {users.loading && <em>Loading users...</em>}
+        {users.items &&
+          <ul>
+            {users.items.map((user, index) =>
+              <li key={user.id}>
+                {user.username}
+                {
+                  user.deleting ? <em> - Deleting...</em>
+                    : user.deleteError ? <span className="error"> - ERROR: {user.deleteError}</span>
+                      : <span> - <a onClick={this.handleDeleteUser(user.id)}>Delete</a></span>
+                }
+              </li>
+            )}
+          </ul>
+        } */}
+      </div>
+    );
+  }
 }
- 
+
 function mapStateToProps(state) {
-    const { users, authentication } = state;
-    const { user } = authentication;
-    return {
-        user,
-        users
-    };
+  const { users, authentication } = state;
+  const { user } = authentication;
+  return {
+    user,
+    users
+  };
 }
- 
+
 const connectedHomePage = connect(mapStateToProps)(HomePage);
 export { connectedHomePage as HomePage };

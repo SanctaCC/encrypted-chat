@@ -13,12 +13,8 @@ public class WSConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-<<<<<<< HEAD
-        registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
-=======
         registry.addEndpoint("/ws").setAllowedOrigins("*").addInterceptors(new HttpSessionHandshakeInterceptor())
                 .withSockJS();
->>>>>>> de6c5a1ab744586910a89e7fb359aa7e8fce0d89
     }
 
     @Override

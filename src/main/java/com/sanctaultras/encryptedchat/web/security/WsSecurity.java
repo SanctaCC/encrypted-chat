@@ -9,7 +9,7 @@ public class WsSecurity extends AbstractSecurityWebSocketMessageBrokerConfigurer
 
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
-        messages.simpDestMatchers("/topic/hello").anonymous().anyMessage().permitAll();
+        messages.simpDestMatchers("/topic/hello").authenticated().anyMessage().permitAll();
     }
 
     @Override
