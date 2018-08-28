@@ -22,22 +22,18 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User extends BaseEntity {
+public class User extends BaseEntity<Long> {
 
     @Column(unique = true)
     private String email;
 
     private String password;
 
-    @LastModifiedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private Date date;
-
     private String encryptedPrivateKey;
 
     private String publicKey;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "users")
     private Set<ChatRoom> userRooms;
 
     @Override

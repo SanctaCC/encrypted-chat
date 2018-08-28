@@ -1,4 +1,4 @@
-package com.sanctaultras.encryptedchat.user.register;
+package com.sanctaultras.encryptedchat.user.account.register;
 
 import lombok.Data;
 

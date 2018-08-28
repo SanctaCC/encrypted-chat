@@ -1,4 +1,4 @@
-package com.sanctaultras.encryptedchat.web;
+package com.sanctaultras.encryptedchat.web.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

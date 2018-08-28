@@ -1,5 +1,7 @@
-package com.sanctaultras.encryptedchat.user;
+package com.sanctaultras.encryptedchat.user.account;
 
+import com.sanctaultras.encryptedchat.user.User;
+import com.sanctaultras.encryptedchat.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
