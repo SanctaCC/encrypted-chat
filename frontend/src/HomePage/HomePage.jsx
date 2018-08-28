@@ -12,37 +12,37 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        let stompClient = null;
-        const wsSourceUrl = "http://localhost:8080/ws";
-        var socket = new SockJS(wsSourceUrl);
-        stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
-            console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/hello', function (greeting) {
-                console.log('test')
-                console.log(greeting)
-            });
-            stompClient.send("/app/test", {}, JSON.stringify({'name': 'test'}));
-        });
+        // let stompClient = null;
+        // const wsSourceUrl = "http://localhost:8080/ws";
+        // var socket = new SockJS(wsSourceUrl);
+        // stompClient = Stomp.over(socket);
+        // stompClient.connect({}, function (frame) {
+        //     console.log('Connected: ' + frame);
+        //     stompClient.subscribe('/topic/hello', function (greeting) {
+        //         console.log('test')
+        //         console.log(greeting)
+        //     });
+        //     stompClient.send("/app/test", {}, JSON.stringify({'name': 'test'}));
+        // });
 
-        setInterval(() => {
-            stompClient.send("/app/test", {}, JSON.stringify({'name': 'test'}));
-        }, 2000)
+        // setInterval(() => {
+        //     stompClient.send("/app/test", {}, JSON.stringify({'name': 'test'}));
+        // }, 2000)
     }
  
     handleDeleteUser(id) {
-        return (e) => this.props.dispatch(userActions.delete(id));
+        return (e) => this.props.dispatch(userActions.delete(id));
     }
 
  
     render() {
-        const { user } = this.props;
+        const { user, users } = this.props;
 
         return (
             <div className="col-md-6 col-md-offset-3">
-                <h1>Hi {user.username}!</h1>
+                <h1>Hi {user.username}!</h1>
                 <p>You're logged in with React!!</p>
-{/*                 <h3>All registered users:</h3>
+                <h3>All registered users:</h3>
                 {users.loading && <em>Loading users...</em>}
                 {users.items &&
                     <ul>
@@ -57,7 +57,7 @@ class HomePage extends React.Component {
                             </li>
                         )}
                     </ul>
-                } */}
+                } 
                 <p>
                     <Link to="/login">Logout</Link>
                 </p>

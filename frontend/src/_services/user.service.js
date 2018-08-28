@@ -11,32 +11,38 @@ export const userService = {
     // delete: _delete
 };
 
+axios.defaults.withCredentials = true
 function login(username, password) {
     return axios.post(`http://localhost:8080/login`, `username=${username}&password=${password}`)
         .then(handleResponse)
         .then(user => {
-            // // login successful if there's a jwt token in the response
-            // if (user.token) {
-            //     // store user details and jwt token in local storage to keep user logged in between page refreshes
-            // }
-            console.log(user);
             localStorage.setItem('user', JSON.stringify(user));
             return user;
+        })
+        .catch((error) => {
+            // Error
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
         });
 }
 
+
 function logout() {
-    // remove user from local storage to log user out
+    axios.get(`http://localhost:8080/logout`)
     localStorage.removeItem('user');
 }
 
 function getAll() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(`/users`, requestOptions).then(handleResponse);
+    return axios.get(`http://localhost:8080/accounts`).then(handleResponse);
 }
 
 function getById(id) {
@@ -49,7 +55,7 @@ function getById(id) {
 }
 
 function register(user) {
-    return axios.post(`http://localhost:8080/register`,user).then(handleResponse);
+    return axios.post(`http://localhost:8080/register`, user).then(handleResponse);
 }
 
 // function update(user) {
@@ -73,20 +79,9 @@ function register(user) {
 
 function handleResponse(response) {
     console.log(response)
+    if (response.status === 401) {
+        // auto logout if 401 response returned from api
+        logout();
+    }
     return response;
-    // return response.then(text => {
-    //     const data = text && JSON.parse(text);
-    //     if (!response.ok) {
-    //         if (response.status === 401) {
-    //             // auto logout if 401 response returned from api
-    //             logout();
-    //             window.location.reload(true);
-    //         }
-
-    //         const error = (data && data.message) || response.statusText;
-    //         return Promise.reject(error);
-    //     }
-
-    //     return data;
-    // });
 }
