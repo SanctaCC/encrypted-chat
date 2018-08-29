@@ -1,18 +1,16 @@
 package com.sanctaultras.auth.user;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -29,15 +27,10 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @JsonIgnore
     private String password;
 
-    @LastModifiedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private Date date;
-
-    private String encryptedPrivateKey;
-
-    private String publicKey;
+    private String avatarURL;
 
 //    @ManyToMany(mappedBy = "users")
 //    private Set<ChatRoom> userRooms;
@@ -53,7 +46,6 @@ public class User {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(super.hashCode(), getId());
     }
 }

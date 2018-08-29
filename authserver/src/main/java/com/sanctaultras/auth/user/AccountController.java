@@ -1,7 +1,6 @@
 package com.sanctaultras.auth.user;
 
 import com.querydsl.core.types.Predicate;
-import com.sanctaultras.auth.account.UserDetailsServiceImpl;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,12 +22,10 @@ import javax.validation.constraints.Size;
 public class AccountController {
 
     private final AccountService accountService;
-    private final UserDetailsServiceImpl userDetailsService;
     private final UserRepository userRepository;
 
-    public AccountController(AccountService accountService, UserDetailsServiceImpl userDetailsService, UserRepository userRepository) {
+    public AccountController(AccountService accountService, UserRepository userRepository) {
         this.accountService = accountService;
-        this.userDetailsService = userDetailsService;
         this.userRepository = userRepository;
     }
 
@@ -41,9 +38,9 @@ public class AccountController {
     }
 
     @GetMapping("/accounts")
-    public ResponseEntity<Page<User>> getUsers(@QuerydslPredicate(root = com.sanctaultras.auth.user.User.class)
+    public ResponseEntity<Page<?>> getUsers(@QuerydslPredicate(root = com.sanctaultras.auth.user.User.class)
                                                        Predicate predicate, Pageable pageable) {
-        return ResponseEntity.ok(userRepository.findAll(predicate,pageable).map(userDetailsService::createUserDetails));
+        return ResponseEntity.ok(userRepository.findAll(predicate,pageable));
     }
 }
 @Data
