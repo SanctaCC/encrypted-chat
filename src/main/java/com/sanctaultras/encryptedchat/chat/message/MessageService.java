@@ -1,5 +1,6 @@
-package com.sanctaultras.encryptedchat.user.chat;
+package com.sanctaultras.encryptedchat.chat.message;
 
+import com.sanctaultras.encryptedchat.chat.room.ChatRoomRepository;
 import com.sanctaultras.encryptedchat.user.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +35,7 @@ public class MessageService {
         message.setBody(body);
         message.setAuthor(userRepository.getOne(userId));
         message.setParentChatRoom(chatRoomRepository.getOne(chatRoomId));
-        return messageRepository.save(message);
+        return messageRepository.save(message.send());
     }
 
 }

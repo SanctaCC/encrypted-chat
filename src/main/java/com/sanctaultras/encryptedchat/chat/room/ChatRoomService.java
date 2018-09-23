@@ -1,4 +1,4 @@
-package com.sanctaultras.encryptedchat.user.chat;
+package com.sanctaultras.encryptedchat.chat.room;
 
 import com.sanctaultras.encryptedchat.user.User;
 import com.sanctaultras.encryptedchat.user.UserRepository;

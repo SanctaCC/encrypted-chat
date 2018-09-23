@@ -1,4 +1,4 @@
-package com.sanctaultras.encryptedchat.user.chat;
+package com.sanctaultras.encryptedchat.chat.room;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -25,10 +25,11 @@ public class ChatRoom extends BaseEntity<UUID> {
     private String name;
 
     @ManyToMany
-    @JsonSerialize(using=UserSetSerializer.class)
+    @JsonSerialize(using = UserSetSerializer.class)
     private Set<User> users;
 
 }
+
 class UserSetSerializer extends JsonSerializer<Set<User>> {
 
     @Override
@@ -36,18 +37,15 @@ class UserSetSerializer extends JsonSerializer<Set<User>> {
             throws IOException {
 
         jsonGenerator.writeStartArray();
-        value.forEach( p-> {
+        value.forEach(p -> {
             try {
                 jsonGenerator.writeStartObject();
-                jsonGenerator.writeNumberField("id",p.getId());
-                jsonGenerator.writeStringField("email",p.getEmail());
+                jsonGenerator.writeNumberField("id", p.getId());
+                jsonGenerator.writeStringField("email", p.getEmail());
                 jsonGenerator.writeEndObject();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
-
         });
         jsonGenerator.writeEndArray();
     }

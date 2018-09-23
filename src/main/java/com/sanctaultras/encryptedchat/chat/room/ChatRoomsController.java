@@ -1,5 +1,6 @@
-package com.sanctaultras.encryptedchat.user.chat;
+package com.sanctaultras.encryptedchat.chat.room;
 
+import com.sanctaultras.encryptedchat.chat.message.MessageService;
 import com.sanctaultras.encryptedchat.user.account.CustomSessionUser;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

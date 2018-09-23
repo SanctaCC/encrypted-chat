@@ -1,4 +1,4 @@
-package com.sanctaultras.encryptedchat.user.chat;
+package com.sanctaultras.encryptedchat.chat.room;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

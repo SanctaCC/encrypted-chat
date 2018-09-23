@@ -48,6 +48,6 @@ public class AccountController {
 @Data
 class ChangePasswordForm {
     private String oldPassword;
-    @Size(min=6,max = 72)
+    @Size(min=6, max = 72)
     private String newPassword;
 }

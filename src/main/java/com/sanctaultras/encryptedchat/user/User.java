@@ -2,8 +2,8 @@ package com.sanctaultras.encryptedchat.user;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sanctaultras.encryptedchat.chat.room.ChatRoom;
 import com.sanctaultras.encryptedchat.commons.BaseEntity;
-import com.sanctaultras.encryptedchat.user.chat.ChatRoom;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +24,7 @@ public class User extends BaseEntity<Long> {
 
     @Column(unique = true)
     private String email;
+
     @JsonIgnore
     private String password;
 
