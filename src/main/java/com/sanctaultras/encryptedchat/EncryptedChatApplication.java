@@ -1,9 +1,9 @@
 package com.sanctaultras.encryptedchat;
 
+import com.sanctaultras.encryptedchat.chat.room.ChatRoom;
+import com.sanctaultras.encryptedchat.chat.room.ChatRoomRepository;
 import com.sanctaultras.encryptedchat.user.User;
 import com.sanctaultras.encryptedchat.user.UserRepository;
-import com.sanctaultras.encryptedchat.user.chat.ChatRoom;
-import com.sanctaultras.encryptedchat.user.chat.ChatRoomRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,14 +17,14 @@ import java.util.HashSet;
 @Slf4j
 public class EncryptedChatApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(EncryptedChatApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(EncryptedChatApplication.class, args);
+    }
 
-	@Bean
-	public ApplicationRunner applicationRunner(UserRepository userRepository,
+    @Bean
+    public ApplicationRunner applicationRunner(UserRepository userRepository,
                                                ChatRoomRepository chatRoomRepository) {
-	    User admin = User.builder().email("admin")
+        User admin = User.builder().email("admin")
                 .password("$2a$12$xXkEzvvadsvzuSlrsNDj8e9QvgnIYUeEmQPl/NqVeqc2O0x90h7hO")
                 .build();
 
@@ -36,5 +36,5 @@ public class EncryptedChatApplication {
         first.getUsers().add(admin);
         first.getUsers().add(user2);
         return args -> chatRoomRepository.save(first);
-	}   //admin admin
+    }   //admin admin
 }
